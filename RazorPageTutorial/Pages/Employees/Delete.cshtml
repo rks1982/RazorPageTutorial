@@ -1,0 +1,16 @@
+﻿@page "{id}"
+@model RazorPageTutorial.Pages.Employees.DeleteModel
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Delete Confirmation</h1>
+<div class="alert alert-danger">
+    <h5>Are you sure you want to delete the employee @Model.Employee.Name</h5>
+    <form method="post">
+        <button type="submit" class="btn btn-danger">Yes</button>
+        <a class="btn btn-primary" asp-page="/Employees/Index">No</a>
+    </form>
+</div>
+

@@ -23,12 +23,31 @@ namespace RazorPagesTutorial.Services
 
 
         }
+
+        public Employee Add(Employee newEmployee)
+        {
+            newEmployee.Id = _employeeList.Max(e => e.Id) + 1;
+            _employeeList.Add(newEmployee);
+            return newEmployee;
+        }
+
+        public Employee Delete(int id)
+        {
+           Employee employeeToDelete = _employeeList.FirstOrDefault(e => e.Id == id);
+            if (employeeToDelete != null)
+            {
+                _employeeList.Remove(employeeToDelete);
+            }
+            return employeeToDelete;
+
+        }
+
         public IEnumerable<Employee> GetAllEmployees()
         {
             return _employeeList;
         }
 
-        public Employee GetEmployee(int id)
+        public Employee GetEmployee(int? id)
         {
             return _employeeList.FirstOrDefault(e => e.Id == id);
         }
@@ -41,6 +60,7 @@ namespace RazorPagesTutorial.Services
                 employee.Name = updatedEmployee.Name;
                 employee.Email = updatedEmployee.Email;
                 employee.Department = updatedEmployee.Department;
+                employee.PhotoPath = updatedEmployee.PhotoPath;
             }
 
             return employee;

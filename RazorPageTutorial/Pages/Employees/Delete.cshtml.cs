@@ -9,28 +9,21 @@ using RazorPagesTutorial.Services;
 
 namespace RazorPageTutorial.Pages.Employees
 {
-    public class DetailsModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly IEmployeeRepository employeeRepository;
 
-        public DetailsModel(IEmployeeRepository employeeRepository)
+        public DeleteModel(IEmployeeRepository employeeRepository)
         {
             this.employeeRepository = employeeRepository;
         }
 
+        [BindProperty]
         public Employee Employee { get; set; }
-
-        //[BindProperty(SupportsGet =true)]
-        [TempData]
-        public string Message { get; set; }
-        //[BindProperty(SupportsGet =true)]
-        //public int Id { get; set; }
 
         public IActionResult OnGet(int id)
         {
-         //   Id = id;
-            Employee =  employeeRepository.GetEmployee(id);
-
+            Employee = employeeRepository.GetEmployee(id);
             if (Employee == null)
             {
                 return RedirectToPage("/NotFound");
@@ -38,5 +31,16 @@ namespace RazorPageTutorial.Pages.Employees
 
             return Page();
         }
+        public IActionResult OnPost()
+        {
+            Employee deletedEmployee = employeeRepository.Delete(Employee.Id);
+            if (deletedEmployee == null)
+            {
+                return RedirectToPage("/NotFound");
+            }
+            return RedirectToPage("Index");
+
+        }
+
     }
 }
