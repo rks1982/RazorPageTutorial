@@ -42,6 +42,18 @@ namespace RazorPagesTutorial.Services
 
         }
 
+        public IEnumerable<DeptHeadCount> EmployeeCountByDept(Dept? dept)
+        {
+            IEnumerable<Employee> query = _employeeList;
+            if (dept.HasValue)
+            {
+                query = query.Where(e => e.Department == dept.Value);
+
+            }
+
+            return query.GroupBy(e => e.Department).Select(g => new DeptHeadCount() { Department = g.Key.Value, Count = g.Count() }).ToList();
+        }
+
         public IEnumerable<Employee> GetAllEmployees()
         {
             return _employeeList;
@@ -50,6 +62,16 @@ namespace RazorPagesTutorial.Services
         public Employee GetEmployee(int? id)
         {
             return _employeeList.FirstOrDefault(e => e.Id == id);
+        }
+
+        public IEnumerable<Employee> Search(string search)
+        {
+            if (string.IsNullOrEmpty(search))
+            {
+                return _employeeList;
+            }
+            return _employeeList.Where(e => e.Name.Contains(search) || e.Email.Contains(search));
+
         }
 
         public Employee Update(Employee updatedEmployee)

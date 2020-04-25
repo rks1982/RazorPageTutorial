@@ -3,10 +3,12 @@
 @{
     ViewData["Title"] = "Delete";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+    ViewData["ShowButtons"] = false;
 }
 
 <h1>Delete Confirmation</h1>
 <div class="alert alert-danger">
+    <partial name="_DisplayEmployeePartial" model="Model.Employee" view-data="ViewData" />
     <h5>Are you sure you want to delete the employee @Model.Employee.Name</h5>
     <form method="post">
         <button type="submit" class="btn btn-danger">Yes</button>

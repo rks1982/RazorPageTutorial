@@ -19,11 +19,12 @@ namespace RazorPageTutorial.Pages.Employees
             this.emplyeeRepository = emplyeeRepository;
         }
 
-       
+        [BindProperty(SupportsGet =true)]
+        public string SearchTerm { get; set; }
 
         public void OnGet()
         {
-            Employees = emplyeeRepository.GetAllEmployees();
+            Employees = emplyeeRepository.Search(SearchTerm);
         }
     }
 }
